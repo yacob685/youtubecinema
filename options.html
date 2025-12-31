@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaTube Pro - Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+            border-radius: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+
+        .setting-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .setting-info p {
+            font-size: 13px;
+            color: #888;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 56px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(135deg, #ff0000 0%, #d60000 100%);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff0000 0%, #d60000 100%);
+            cursor: pointer;
+        }
+
+        .slider-value {
+            min-width: 50px;
+            text-align: right;
+            font-weight: 600;
+            color: #ff0000;
+        }
+
+        select {
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .theme-card {
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .theme-card.active {
+            border-color: #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+        }
+
+        .theme-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .theme-card.classic { background: linear-gradient(135deg, #000000 0%, #1a0000 100%); }
+        .theme-card.deepBlue { background: linear-gradient(135deg, #0a0e27 0%, #1e3a8a 100%); }
+        .theme-card.crimson { background: linear-gradient(135deg, #1a0000 0%, #7f1d1d 100%); }
+        .theme-card.purple { background: linear-gradient(135deg, #1a0a2e 0%, #7e22ce 100%); }
+        .theme-card.emerald { background: linear-gradient(135deg, #0a1f1f 0%, #047857 100%); }
+
+        .theme-name {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff0000 0%, #d60000 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 0, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .save-indicator {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: rgba(76, 175, 80, 0.2);
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            color: #4CAF50;
+            border-radius: 12px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .keyboard-shortcuts-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+        }
+
+        .shortcut-key {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-weight: 600;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .shortcut-desc {
+            font-size: 13px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🎬</div>
+            <h1>CinemaTube Pro Settings</h1>
+            <p class="subtitle">Customize your immersive viewing experience</p>
+        </div>
+
+        <!-- General Settings -->
+        <div class="section">
+            <h2 class="section-title">General Settings</h2>
+            
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Auto Cinema Mode</h3>
+                    <p>Automatically activate cinema mode when opening videos</p>
+                </div>
+                <div class="toggle-switch active" id="autoToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Remember Per Channel</h3>
+                    <p>Save cinema mode preference for each channel</p>
+                </div>
+                <div class="toggle-switch" id="perChannelToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appearance Settings -->
+        <div class="section">
+            <h2 class="section-title">Appearance</h2>
+            
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Theme</h3>
+                    <p>Choose your cinema theme</p>
+                </div>
+            </div>
+            <div class="theme-grid">
+                <div class="theme-card classic active" data-theme="classic">
+                    <div class="theme-name">Classic</div>
+                </div>
+                <div class="theme-card deepBlue" data-theme="deepBlue">
+                    <div class="theme-name">Deep Blue</div>
+                </div>
+                <div class="theme-card crimson" data-theme="crimson">
+                    <div class="theme-name">Crimson</div>
+                </div>
+                <div class="theme-card purple" data-theme="purple">
+                    <div class="theme-name">Purple</div>
+                </div>
+                <div class="theme-card emerald" data-theme="emerald">
+                    <div class="theme-name">Emerald</div>
+                </div>
+            </div>
+
+            <div class="setting-row" style="margin-top: 24px;">
+                <div class="setting-info">
+                    <h3>Background Opacity</h3>
+                    <p>Adjust the darkness level (50-100%)</p>
+                </div>
+            </div>
+            <div class="slider-container">
+                <input type="range" min="50" max="100" value="95" id="opacitySlider">
+                <span class="slider-value" id="opacityValue">95%</span>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Default Video Size</h3>
+                    <p>Starting size when cinema mode activates</p>
+                </div>
+                <select id="videoSizeSelect">
+                    <option value="small">Small (70%)</option>
+                    <option value="medium">Medium (80%)</option>
+                    <option value="large" selected>Large (90%)</option>
+                    <option value="full">Full Screen (100%)</option>
+                </select>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Glow Effect Intensity</h3>
+                    <p>Ambient glow around the video</p>
+                </div>
+                <select id="glowSelect">
+                    <option value="none">None</option>
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="section">
+            <h2 class="section-title">Features</h2>
+            
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Ambient Mode</h3>
+                    <p>Video colors reflect on the background</p>
+                </div>
+                <div class="toggle-switch" id="ambientToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Keyboard Shortcuts</h3>
+                    <p>Enable hotkeys for quick control</p>
+                </div>
+                <div class="toggle-switch active" id="keyboardToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Fade Animation</h3>
+                    <p>Smooth entrance and exit transitions</p>
+                </div>
+                <div class="toggle-switch active" id="fadeToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+
+            <div class="setting-row">
+                <div class="setting-info">
+                    <h3>Auto-Pause on Exit</h3>
+                    <p>Pause video when exiting cinema mode</p>
+                </div>
+                <div class="toggle-switch" id="autoPauseToggle">
+                    <div class="toggle-slider"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Keyboard Shortcuts -->
+        <div class="section">
+            <h2 class="section-title">Keyboard Shortcuts</h2>
+            <div class="keyboard-shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd class="shortcut-key">ESC</kbd>
+                    <span class="shortcut-desc">Exit Cinema</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd class="shortcut-key">C</kbd>
+                    <span class="shortcut-desc">Toggle Cinema</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd class="shortcut-key">F</kbd>
+                    <span class="shortcut-desc">Fullscreen</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd class="shortcut-key">+</kbd>
+                    <span class="shortcut-desc">Increase Size</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd class="shortcut-key">-</kbd>
+                    <span class="shortcut-desc">Decrease Size</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd class="shortcut-key">1-4</kbd>
+                    <span class="shortcut-desc">Size Presets</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <button class="btn btn-secondary" id="resetBtn">Reset to Defaults</button>
+            <button class="btn btn-primary" id="saveBtn">Save Changes</button>
+        </div>
+    </div>
+
+    <div class="save-indicator" id="saveIndicator">✓ Settings saved successfully!</div>
+
+    <script src="options.js"></script>
+</body>
+</html>

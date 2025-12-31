@@ -1,0 +1,245 @@
+/* Hide YouTube UI elements when cinematic mode is active */
+body.autosub-cinematic-mode #secondary,
+body.autosub-cinematic-mode #related,
+body.autosub-cinematic-mode #comments,
+body.autosub-cinematic-mode ytd-watch-metadata,
+body.autosub-cinematic-mode #above-the-fold,
+body.autosub-cinematic-mode #below,
+body.autosub-cinematic-mode ytd-watch-flexy[theater] #primary-inner,
+body.autosub-cinematic-mode #meta,
+body.autosub-cinematic-mode #info,
+body.autosub-cinematic-mode #actions,
+body.autosub-cinematic-mode #description,
+body.autosub-cinematic-mode #owner,
+body.autosub-cinematic-mode ytd-video-secondary-info-renderer,
+body.autosub-cinematic-mode ytd-video-primary-info-renderer,
+body.autosub-cinematic-mode #title,
+body.autosub-cinematic-mode #secondary-inner,
+body.autosub-cinematic-mode ytd-comments,
+body.autosub-cinematic-mode #masthead-container {
+    display: none !important;
+}
+
+/* Style the page container */
+body.autosub-cinematic-mode {
+    background: #000000 !important;
+    overflow: hidden !important;
+}
+
+body.autosub-cinematic-mode ytd-app {
+    background: #000000 !important;
+}
+
+body.autosub-cinematic-mode ytd-watch-flexy {
+    background: #000000 !important;
+}
+
+/* Center and enlarge the video player */
+body.autosub-cinematic-mode #player-container-outer,
+body.autosub-cinematic-mode #player-container,
+body.autosub-cinematic-mode #player {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw !important;
+    max-width: 1600px !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    z-index: 10 !important;
+    box-shadow: 
+        0 50px 100px rgba(0, 0, 0, 0.9),
+        0 0 100px rgba(255, 0, 0, 0.15) !important;
+    border-radius: 16px !important;
+    overflow: hidden !important;
+}
+
+body.autosub-cinematic-mode #player-theater-container {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw !important;
+    max-width: 1600px !important;
+    height: auto !important;
+    z-index: 10 !important;
+}
+
+body.autosub-cinematic-mode .html5-video-container,
+body.autosub-cinematic-mode video {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 16px !important;
+}
+
+/* Add cinematic glow effect */
+body.autosub-cinematic-mode #player-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    z-index: -1;
+    filter: blur(60px);
+    pointer-events: none;
+}
+
+/* Cinematic Overlay UI */
+#autosub-cinematic-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+#autosub-cinematic-overlay.active {
+    opacity: 1;
+}
+
+/* Header with title and exit button */
+.cinematic-header {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(15, 15, 15, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    pointer-events: all;
+    z-index: 10000;
+    max-width: 90vw;
+}
+
+.cinematic-title {
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cinematic-exit {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+}
+
+.cinematic-exit:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+.cinematic-exit:active {
+    transform: scale(0.98);
+}
+
+/* Status Badge */
+.cinematic-status {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: all;
+    z-index: 10000;
+}
+
+.status-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(76, 175, 80, 0.12);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #4CAF50;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    font-family: 'Inter', sans-serif;
+}
+
+.pulse-dot {
+    width: 8px;
+    height: 8px;
+    background: #4CAF50;
+    border-radius: 50%;
+    position: relative;
+    animation: pulse-ring 2s infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 12px rgba(76, 175, 80, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cinematic-header {
+        padding: 12px 16px;
+        gap: 12px;
+    }
+    
+    .cinematic-title {
+        font-size: 13px;
+        max-width: 200px;
+    }
+    
+    .cinematic-exit {
+        padding: 6px 14px;
+        font-size: 11px;
+    }
+    
+    .status-badge {
+        font-size: 10px;
+        padding: 10px 18px;
+    }
+    
+    body.autosub-cinematic-mode #player-container-outer,
+    body.autosub-cinematic-mode #player-container {
+        width: 95vw !important;
+    }
+    
+    .cinematic-header {
+        top: 20px;
+    }
+    
+    .cinematic-status {
+        bottom: 30px;
+    }
+}
